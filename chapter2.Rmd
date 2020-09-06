@@ -9,11 +9,8 @@ knitr::opts_chunk$set(include = TRUE)
 
 
 # 2.2 The very basics
-
 Before we get started with the motivating dataset, we need to cover the very basics of R.  
-
 ## 2.2.1 Objects
-
 Suppose a high school student asks us for help solving several quadratic equations of the form ax^2 + bx + c = 0. which of course change depending on the values of a, b, and c. One advantage of programming languages is that we can define variables and write expressions with these variables, similar to how we do so in math, but obtain a numeric solution. We will write out general code for the quadratic equation below, but if we are asked to solve x^2 + x − 1 = 0, then we define: 
 
 ```{r}   
@@ -289,7 +286,7 @@ But how did we know to use population? Previously, by applying the function str 
 ```{r}  
   names(murders) 
 ```
-It is important to know that the order of the entries in murders$population preserves the order of the rows in our data table. This will later permit us to manipulate one variable based on the results of another. For example, we will be able to order the state names by the number of murders.
+It is important to know that the order of the entries in murders$ population preserves the order of the rows in our data table. This will later permit us to manipulate one variable based on the results of another. For example, we will be able to order the state names by the number of murders.
 Tip: R comes with a very nice auto-complete functionality that saves us the trouble of typing out all the names. Try typing murders$p then hitting the tab key on your keyboard. This functionality and many other useful auto-complete features are available when working in RStudio.  
   
 ## 2.4.4 Vectors: numerics, characters, and logical
