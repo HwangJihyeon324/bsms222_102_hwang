@@ -6,7 +6,10 @@ output: html_notebook
 {r setup, include=FALSE}
 knitr::opts_chunk$set(include = TRUE)
 ---
-
+```{r}
+install.packages('tidyverse')
+library('tidyverse')
+```
 
 ### Chapter 3. Programming basics.
 
