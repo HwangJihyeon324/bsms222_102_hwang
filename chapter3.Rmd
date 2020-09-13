@@ -2,8 +2,14 @@
 title: "R Notebook"
 output: html_notebook
 ---
+---
+{r setup, include=FALSE}
+knitr::opts_chunk$set(include = TRUE)
+---
+
 
 ### Chapter 3. Programming basics.
+
 We teach R because it greatly facilitates data analysis, the main topic of this book. By coding in R, we can efficiently perform exploratory data analysis, build data analysis pipelines, and prepare data visualization to communicate results. However, R is not just a data analysis environment but a programming language. Advanced R programmers can develop complex packages and even improve R itself, but we do not cover advanced programming in this book. Nonetheless, in this section, we introduce three key programming concepts: conditional expressions, for-loops, and functions. These are not just key building blocks for advanced programming, but are sometimes useful during data analysis. We also note that there are several functions that are widely used to program in R but that we will not cover in this book. These include split, cut, do.call, and Reduce, as well as the data.table package. These are worth learning if you plan to become an expert R programmer.
 
 ## 3.1 Conditional expressions
@@ -94,12 +100,12 @@ s
 Note how s is still 3 after we call avg.
 
 In general, functions are objects, so we assign them to variable names with <-. The function function tells R you are about to define a function. The general form of a function definition looks like this:
-```{r}
+
 my_function <- function(VARIABLE_NAME){
   perform operations on VARIABLE_NAME and calculate VALUE
   VALUE
 }
-```
+
 The functions you define can have multiple arguments as well as default values. For example, we can define a function that computes either the arithmetic or geometric average depending on a user defined variable like this:
 ```{r}
 avg <- function(x, arithmetic = TRUE){
@@ -112,7 +118,7 @@ We will learn more about how to create functions through experience as we face m
 ## 3.3 Namespaces
 
 Once you start becoming more of an R expert user, you will likely need to load several add-on packages for some of your analysis. Once you start doing this, it is likely that two packages use the same name for two different functions. And often these functions do completely different things. In fact, you have already encountered this because both dplyr and the R-base stats package define a filter function. There are five other examples in dplyr. We know this because when we first load dplyr we see the following message:
-```{r}
+
 The following objects are masked from ‘package:stats’:
 
     filter, lag
@@ -120,7 +126,7 @@ The following objects are masked from ‘package:stats’:
 The following objects are masked from ‘package:base’:
 
     intersect, setdiff, setequal, union
-```
+
 So what does R do when we type filter? Does it use the dplyr function or the stats function? From our previous work we know it uses the dplyr one. But what if we want to use the stats version?
 
 These functions live in different namespaces. R will follow a certain order when searching for a function in these namespaces. You can see the order by typing:
@@ -224,12 +230,32 @@ a. all(x)
 b. any(x)
 c. any(!x)
 d. all(!x)
+ans: d
 
-3. The function nchar tells you how many characters long a character vector is. Write a line of code that assigns to the object new_names the state abbreviation when the state name is longer than 8 characters.
+3. The function 'nchar' tells you how many characters long a character vector is. Write a line of code that assigns to the object new_names the state abbreviation when the state name is longer than 8 characters.*추가*
+```{r}
+if(nchar("murders$state")>8) {
+  new_names<-murders$abb
+}
+```
 
 4. Create a function sum_n that for any given value, say n, computes the sum of the integers from 1 to n (inclusive). Use the function to determine the sum of integers from 1 to 5,000.
+```{r}
+sum_n <- function(n){
+  x<-seq(1,n)
+  sum(x)
+}
+sum_n(5000)
+```
 
 5. Create a function altman_plot that takes two arguments, x and y, and plots the difference against the sum.
+```{r}
+altman_plot <- function(x, y){
+  a<-x+y
+  b<-x-y
+  plot(a,b)
+}
+```
 
 6. After running the code below, what is the value of x?
 ```{r}
@@ -238,16 +264,55 @@ my_func <- function(y){
   x <- 5
   y+5
 }
+x
 ```
 
-7. Write a function compute_s_n that for any given n computes the sum Sn=1^2+2^2+3^2+...+n^2. Report the value of the sum when n=10. .
+7. Write a function compute_s_n that for any given n computes the sum Sn=1^2+2^2+3^2+...+n^2. Report the value of the sum when n=10.
+```{r}
+compute_s_n <- function(n){
+  x<-seq(1,n)
+  sum(x^2)
+}
+compute_s_n(10)
+```
 
 8. Define an empty numerical vector s_n of size 25 using s_n <- vector("numeric", 25) and store in the results of S1, S2,..., S25 using a for-loop.
+```{r}
+s_n<-vector("numeric", 25)
+for(n in 1:25){
+  s_n[n] <- compute_s_n(n)
+}
+```
 
 9. Repeat exercise 8, but this time use sapply.
+```{r}
+s_n[n] <- sapply(n, compute_s_n)
+```
 
 10. Repeat exercise 8, but this time use map_dbl.
+```{r}
+n<-seq(1, 25)
+map_dbl(n, compute_s_n)
+s_n
+```
 
 11. Plot Sn versus n. Use points defined by n=1,...,25.
+```{r}
+compute_s_n <- function(n){
+  x<-seq(1,n)
+  sum(x^2)
+}
+s_n_ <- vector("numeric", 25)
+for(n in 1:25){
+  s_n_[n] <- compute_s_n(n)
+}
+n<-1:25
+plot(n, s_n_)
+```
 
 12. Confirm that the formula for this sum is Sn=n(n+1)(2n+1)/6.
+```{r}
+c_n[n] <- n*(n+1)*(2*n+1)/6
+plot(n, s_n_-c_n)
+## s_n_-c_n = 0 임을 그래프로 확인하였으므로 confirm됨.
+```
